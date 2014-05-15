@@ -34,16 +34,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url admin.views.signin %}">CTF Center</a>
+          <a class="navbar-brand" href="{% url 'admin.views.signin' %}">CTF Center</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="{{q.nav1}}"><a href="{% url admin.views.user %}">User</a></li>
-            <li class="{{q.nav2}}"><a href="{% url admin.views.question %}">Question</a></li>
-            <li class="{{q.nav3}}"><a href="{% url admin.views.notice %}">Notice</a></li>
+            <li class="{{q.nav1}}"><a href="{% url 'admin.views.user' %}">User</a></li>
+            <li class="{{q.nav2}}"><a href="{% url 'admin.views.question' %}">Question</a></li>
+            <li class="{{q.nav3}}"><a href="{% url 'admin.views.notice' %}">Notice</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url admin.views.logout %}">Logout</a></li>
+            <li><a href="{% url 'admin.views.logout' %}">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

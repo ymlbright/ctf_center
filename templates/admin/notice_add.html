@@ -19,7 +19,7 @@
 	<script>
 		function submitFun(){
         	if (confirm("Are you sure to submit?")){
-	          $.post("{% url admin.views.notice_add %}", $("#noticeForm").serialize(),function (data){
+	          $.post("{% url 'admin.views.notice_add' %}", $("#noticeForm").serialize(),function (data){
 	              if (data.status!=1){
 	                alert("Submit fail."+data.msg)
 	              } else{

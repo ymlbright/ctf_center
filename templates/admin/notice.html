@@ -1,7 +1,7 @@
 {%extends "admin/base.html"%}
 {%block title%}CTF Center - scoreboard{% endblock %}
 {%block content%}
-	<div class="pull-right"><a class="btn btn-default" href="{% url admin.views.notice_add %}">Add</a></div>
+	<div class="pull-right"><a class="btn btn-default" href="{% url 'admin.views.notice_add' %}">Add</a></div>
     <table class="table table-hover">
 		<thead>
 			<tr>
@@ -17,7 +17,7 @@
 					<th>{{ n.get_date }}</th>
 					<th>{{ n.content }}</th>
 					<th>
-						<a href="{% url admin.views.notice_del id=n.nid %}" onclick="return makesure(this);">Delete</a>
+						<a href="{% url 'admin.views.notice_del' id=n.nid %}" onclick="return makesure(this);">Delete</a>
 					</th>
 				</tr>
 			{% endfor %}

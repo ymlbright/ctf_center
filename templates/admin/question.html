@@ -21,8 +21,8 @@
 					<th>{{ u.point }}</th>
 					<th>{{ u.get_date }}</th>
 					<th>
-						<a href="{% url admin.views.edit id=u.qid %}">Edit</a> |
-						<a href="{% url admin.views.delq id=u.qid %}" onclick="return makesure(this);">Delete</a>
+						<a href="{% url 'admin.views.edit' id=u.qid %}">Edit</a> |
+						<a href="{% url 'admin.views.delq' id=u.qid %}" onclick="return makesure(this);">Delete</a>
 					</th>
 				</tr>
 			{% endfor %}

@@ -19,11 +19,11 @@
 					<th>{{ u.email }}</th>
 					<th>
 						{% if u.is_locked %}
-							<a href="{% url admin.views.unlock id=u.uid %}" onclick="return clickFun(this);">Unlock</a> |
+							<a href="{% url 'admin.views.unlock' id=u.uid %}" onclick="return clickFun(this);">Unlock</a> |
 						{% else %}
-							<a href="{% url admin.views.lock id=u.uid %}" onclick="return clickFun(this);">Lock</a> |
+							<a href="{% url 'admin.views.lock' id=u.uid %}" onclick="return clickFun(this);">Lock</a> |
 						{% endif %}
-						<a href="{% url admin.views.delu id=u.uid %}" onclick="return makesure(this);">Delete</a>
+						<a href="{% url 'admin.views.delu' id=u.uid %}" onclick="return makesure(this);">Delete</a>
 					</th>
 				</tr>
 			{% endfor %}

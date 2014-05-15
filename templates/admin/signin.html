@@ -49,7 +49,7 @@
     <script>
       function login(){
         if ($('#user').val() != '' && $('#pwd').val() != ''){
-          $.post("{% url admin.views.login %}", $("#loginForm").serialize(),function (data){
+          $.post("{% url 'admin.views.login' %}", $("#loginForm").serialize(),function (data){
               if (data.status!=1){
                 $('#alert').removeClass('hide');
                 $('#alert').text("Username or password wrong");

@@ -18,9 +18,9 @@
 					<th>
 						{% for p in u.passed %}
 							{% if not forloop.last %}
-								<a href="{% url usr.views.detial id=p.qid.qid %}">{{p.qid.name}} </a>|
+								<a href="{% url 'usr.views.detial' id=p.qid.qid %}">{{p.qid.name}} </a>|
 							{% else %}
-								<a href="{% url usr.views.detial id=p.qid.qid %}">{{p.qid.name}} </a>
+								<a href="{% url 'usr.views.detial' id=p.qid.qid %}">{{p.qid.name}} </a>
 							{% endif %}
 						{% endfor %}
 					</th>
@@ -34,9 +34,9 @@
 					<th>
 						{% for p in u.passed %}
 							{% if not forloop.last %}
-								<a href="{% url usr.views.detial id=p.qid.qid %}">{{p.qid.name}} </a>|
+								<a href="{% url 'usr.views.detial' id=p.qid.qid %}">{{p.qid.name}} </a>|
 							{% else %}
-								<a href="{% url usr.views.detial id=p.qid.qid %}">{{p.qid.name}} </a>
+								<a href="{% url 'usr.views.detial' id=p.qid.qid %}">{{p.qid.name}} </a>
 							{% endif %}
 						{% endfor %}
 					</th>

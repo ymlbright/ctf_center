@@ -21,9 +21,9 @@
       <script src="/static/js/respond.min.js"></script>
     <![endif]-->
     <script>
-      var LoginURL = "{% url usr.views.login %}";
-      var RegieterURL = "{% url usr.views.reg %}";
-      var SubmitURL = "{% url usr.views.flag %}";
+      var LoginURL = "{% url 'usr.views.login' %}";
+      var RegieterURL = "{% url 'usr.views.reg' %}";
+      var SubmitURL = "{% url 'usr.views.flag' %}";
     </script>
 </head>
 
@@ -38,29 +38,29 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url usr.views.index %}">CTF Center</a>
+          <a class="navbar-brand" href="{% url 'usr.views.index' %}">CTF Center</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="{{q.nav1}}"><a href="{% url usr.views.scoreboard %}">Scoreboard</a></li>
-            <li class="{{q.nav2}}"><a href="{% url usr.views.question type='misc' %}">Misc</a></li>
-            <li class="{{q.nav3}}"><a href="{% url usr.views.question type='crypto' %}">Crypto</a></li>
-            <li class="{{q.nav4}}"><a href="{% url usr.views.question type='forensics' %}">Forensics</a></li>
-            <li class="{{q.nav5}}"><a href="{% url usr.views.question type='pwnables' %}">Pwnables</a></li>
-            <li class="{{q.nav6}}"><a href="{% url usr.views.question type='reverse' %}">Reverse</a></li>
-            <li class="{{q.nav7}}"><a href="{% url usr.views.question type='web' %}">Web</a></li>
-            <li class="{{q.nav8}}"><a href="{% url usr.views.notice %}">Notice</a></li>
+            <li class="{{q.nav1}}"><a href="{% url 'usr.views.scoreboard' %}">Scoreboard</a></li>
+            <li class="{{q.nav2}}"><a href="{% url 'usr.views.question' type='misc' %}">Misc</a></li>
+            <li class="{{q.nav3}}"><a href="{% url 'usr.views.question' type='crypto' %}">Crypto</a></li>
+            <li class="{{q.nav4}}"><a href="{% url 'usr.views.question' type='forensics' %}">Forensics</a></li>
+            <li class="{{q.nav5}}"><a href="{% url 'usr.views.question' type='pwnables' %}">Pwnables</a></li>
+            <li class="{{q.nav6}}"><a href="{% url 'usr.views.question' type='reverse' %}">Reverse</a></li>
+            <li class="{{q.nav7}}"><a href="{% url 'usr.views.question' type='web' %}">Web</a></li>
+            <li class="{{q.nav8}}"><a href="{% url 'usr.views.notice' %}">Notice</a></li>
           </ul>
           {% if request.session.username %}
             <ul class="nav navbar-nav navbar-right">
               <li><a >Hi,{{request.session.username}}</a></li>
-              <li><a href="{% url usr.views.myscore %}">Score</a></li>
-              <li><a href="{% url usr.views.logout %}">Logout</a></li>
+              <li><a href="{% url 'usr.views.myscore' %}">Score</a></li>
+              <li><a href="{% url 'usr.views.logout' %}">Logout</a></li>
             </ul>
           {% else %}
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="{% url usr.views.signin %}">Sign in</a></li>
-              <li><a href="{% url usr.views.register %}">Register</a></li>
+              <li><a href="{% url 'usr.views.signin' %}">Sign in</a></li>
+              <li><a href="{% url 'usr.views.register' %}">Register</a></li>
             </ul>
           {% endif %}
         </div><!--/.nav-collapse -->
@@ -74,7 +74,7 @@
 
     <div id="footer">
       <div class="container">
-        <p class="text-muted text-center">Ctf practice center. By:bright</p>
+        <p class="text-muted text-center">Ctf practice center. By:susteam</p>
       </div>
     </div>
 
