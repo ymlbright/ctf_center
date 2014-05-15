@@ -1,0 +1,52 @@
+{%extends "base.html"%}
+{%block title%}CTF Center - {{type}}{% endblock %}
+{%block content%}
+	<div class="container-fluid">
+  		<div class="row">
+  			{% for r in q.list %}
+  				{% if not r.pass %}
+		  			<div class="col-md-2">
+			  			<div class="panel panel-default">
+						  	<div class="panel-heading">
+						    	<h3 class="panel-title">{{r.name}}</h3>
+						  	</div>
+						  	<div class="panel-body">
+						  		<p>Not passed</p>
+						    	<p>Score:{{r.point}}</p>
+						    	<p>Passed:{{r.passed}}</p>
+						    	<p>Submitted:{{r.submitted}}</p>
+						    	<a href="{% url usr.views.detial id=r.qid %}" class="btn btn-default btn-block">Entry</a>
+						  	</div>
+						</div>
+					</div>
+				{% else %}
+					<div class="col-md-2">
+			  			<div class="panel panel-success">
+						  	<div class="panel-heading">
+						    	<h3 class="panel-title">{{r.name}}</h3>
+						  	</div>
+						  	<div class="panel-body">
+						  		<p>Passed</p>
+						    	<p>Score:{{r.point}}</p>
+						    	<p>Passed:{{r.passed}}</p>
+						    	<p>Submitted:{{r.submitted}}</p>
+						    	<a href="{% url usr.views.detial id=r.qid %}" class="btn btn-default btn-block">Entry</a>
+						  	</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+  		</div>
+	</div>
+	<ul class="pager">
+		{% if q.list.has_previous %}
+			<li><a href="?page={{q.pagepre}}">Previous</a></li>
+		{% endif %}
+		{% if q.list.has_other_pages %}
+			<li>{{q.pagenow}}/{{q.pageall}}</li>
+		{% endif %}
+		{% if q.list.has_next %}
+			<li><a href="?page={{q.pagenex}}">Next</a></li>
+		{% endif %}
+	</ul>
+{%endblock%}

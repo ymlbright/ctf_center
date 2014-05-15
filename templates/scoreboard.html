@@ -1,0 +1,47 @@
+{%extends "base.html"%}
+{%block title%}CTF Center - scoreboard{% endblock %}
+{%block content%}
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>User</th>
+				<th>Score</th>
+				<th>Passed</th>
+			</tr>
+		<tbody>
+			{% for u in q.score %}
+				<tr>
+					<th>{{ forloop.counter }}</th>
+					<th>{{u.name}}</th>
+					<th>{{u.score}}</th>
+					<th>
+						{% for p in u.passed %}
+							{% if not forloop.last %}
+								<a href="{% url usr.views.detial id=p.qid.qid %}">{{p.qid.name}} </a>|
+							{% else %}
+								<a href="{% url usr.views.detial id=p.qid.qid %}">{{p.qid.name}} </a>
+							{% endif %}
+						{% endfor %}
+					</th>
+				</tr>
+			{% endfor %}
+			{% for u in q.myscore %}
+				<tr>
+					<th>{{ u.index }}</th>
+					<th>{{u.name}}</th>
+					<th>{{u.score}}</th>
+					<th>
+						{% for p in u.passed %}
+							{% if not forloop.last %}
+								<a href="{% url usr.views.detial id=p.qid.qid %}">{{p.qid.name}} </a>|
+							{% else %}
+								<a href="{% url usr.views.detial id=p.qid.qid %}">{{p.qid.name}} </a>
+							{% endif %}
+						{% endfor %}
+					</th>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{%endblock%}

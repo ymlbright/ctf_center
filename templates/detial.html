@@ -1,0 +1,28 @@
+{%extends "base.html"%}
+{%block title%}CTF Center - about{% endblock %}
+{%block content%}
+    <div class="panel panel-info">
+    	<div class="panel-heading">
+			<h3 class="panel-title">{{q.q.name}}</h3>
+		</div>
+		<div class="panel-body">
+			<p>Type:{{q.q.get_tag_display}} Score:{{q.q.point}} Createtime:{{q.q.get_date}} From:{{q.q.source}}</p>
+			<p>{{q.q.discribe|safe}}</p>
+			{% if q.pass %}
+				<div class="alert alert-success">
+					<p>Cheer passed.</p>
+				</div>
+			{% else %}
+				<div class="alert alert-danger hide" id="alert">Flag wrong.</div>
+				<form class="form-inline" id="flagForm" role="form" onsubmit="return submitFlag();">
+					{% csrf_token %}
+					<input type="text" class="hide" name="qid" value="{{q.q.qid}}">
+					<div class="form-group">
+						<label class="sr-only" for="flag">Flag</label>
+						<input type="text" class="form-control" id="flag" name="flag" placeholder="Enter flag">
+					</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			{% endif %}
+		</div>
+    </div>
+{%endblock%}

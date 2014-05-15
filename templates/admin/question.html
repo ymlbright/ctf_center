@@ -1,0 +1,60 @@
+{%extends "admin/base.html"%}
+{%block title%}CTF Center - question{% endblock %}
+{%block content%}
+    <div class="pull-right"><a class="btn btn-default" href="{% url admin.views.edit id=0 %}">Add</a></div>
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Qid</th>
+				<th>Tag</th>
+				<th>Name</th>
+				<th>Score</th>
+				<th>Date</th>
+				<th>Action</th>
+			</tr>
+		<tbody>
+			{% for u in q.q %}
+				<tr>
+					<th>{{ u.qid }}</th>
+					<th>{{ u.get_tag_display }}</th>
+					<th>{{ u.name }}</th>
+					<th>{{ u.point }}</th>
+					<th>{{ u.get_date }}</th>
+					<th>
+						<a href="{% url admin.views.edit id=u.qid %}">Edit</a> |
+						<a href="{% url admin.views.delq id=u.qid %}" onclick="return makesure(this);">Delete</a>
+					</th>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<ul class="pager">
+		{% if q.q.has_previous %}
+			<li><a href="?page={{q.pagepre}}">Previous</a></li>
+		{% endif %}
+		{% if q.q.has_other_pages %}
+			<li>{{q.pagenow}}/{{q.pageall}}</li>
+		{% endif %}
+		{% if q.q.has_next %}
+			<li><a href="?page={{q.pagenex}}">Next</a></li>
+		{% endif %}
+	</ul>
+	<script>
+		function makesure(p){
+			if (confirm("Are you sure to delete this question?")){
+				clickFun(p);
+			}
+			return false;
+		}
+		function clickFun(p){
+			$.get($(p).attr('href'),function(data,status){
+				if (data == '1'){
+			    	alert("Success");
+			    	location.reload()
+			    }else
+			    	alert("Fail");
+			 });
+			return false;
+		}
+	</script>
+{%endblock%}

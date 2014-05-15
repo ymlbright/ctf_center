@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CTF Center">
+    <meta name="author" content="bright">
+
+    <title>CTF Center</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+ 
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body style="background-color: #eee;">
+
+    <div class="container">
+      <form role = "form" id="loginForm" style="max-width: 330px;padding: 15px;margin: 0 auto;" onsubmit="return login();">
+        <h2>Authorizations</h2>
+        <div id="alert" class="alert alert-warning hide"></div>
+        {% csrf_token %}
+        <div class = "form-group">
+          <label for="user">User</label>
+          <input type="text" class="form-control" id="user" name="user" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password</label>
+          <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-default btn-block">Login</button>
+      </form>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery-2.1.1.js"></script>
+    <script>
+      function login(){
+        if ($('#user').val() != '' && $('#pwd').val() != ''){
+          $.post("{% url admin.views.login %}", $("#loginForm").serialize(),function (data){
+              if (data.status!=1){
+                $('#alert').removeClass('hide');
+                $('#alert').text("Username or password wrong");
+              } else
+                document.location = data.jump;
+            },'json');
+        } else {
+          $('#alert').removeClass('hide');
+          $('#alert').text("Username or password is empty");
+        }
+        return false;
+      }
+    </script>
+  </body>
+</html>

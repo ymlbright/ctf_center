@@ -1,0 +1,25 @@
+{%extends "base.html"%}
+{%block title%}CTF Center{% endblock %}
+{%block content%}
+      <form role = "form" id="regForm" style="max-width: 330px;padding: 15px;margin: 0 auto;" onsubmit="return register();">
+        <div id="alert" class="alert alert-warning hide"></div>
+        {% csrf_token %}
+        <div class = "form-group">
+          <label for="user">User</label>
+          <input type="text" class="form-control" id="user" name="user" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password</label>
+          <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password confirm</label>
+          <input type="password" class="form-control" id="pwdcon" placeholder="Confirm your password">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+        </div>
+        <button type="submit" class="btn btn-default btn-block">Register</button>
+      </form>
+{%endblock%}

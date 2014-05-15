@@ -1,0 +1,61 @@
+{%extends "admin/base.html"%}
+{%block title%}CTF Center - scoreboard{% endblock %}
+{%block content%}
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Uid</th>
+				<th>Name</th>
+				<th>Score</th>
+				<th>Email</th>
+				<th>Action</th>
+			</tr>
+		<tbody>
+			{% for u in q.user %}
+				<tr>
+					<th>{{ u.uid }}</th>
+					<th>{{ u.name }}</th>
+					<th>{{ u.score }}</th>
+					<th>{{ u.email }}</th>
+					<th>
+						{% if u.is_locked %}
+							<a href="{% url admin.views.unlock id=u.uid %}" onclick="return clickFun(this);">Unlock</a> |
+						{% else %}
+							<a href="{% url admin.views.lock id=u.uid %}" onclick="return clickFun(this);">Lock</a> |
+						{% endif %}
+						<a href="{% url admin.views.delu id=u.uid %}" onclick="return makesure(this);">Delete</a>
+					</th>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<ul class="pager">
+		{% if q.user.has_previous %}
+			<li><a href="?page={{q.pagepre}}">Previous</a></li>
+		{% endif %}
+		{% if q.user.has_other_pages %}
+			<li>{{q.pagenow}}/{{q.pageall}}</li>
+		{% endif %}
+		{% if q.user.has_next %}
+			<li><a href="?page={{q.pagenex}}">Next</a></li>
+		{% endif %}
+	</ul>
+	<script>
+		function makesure(p){
+			if (confirm("Are you sure to delete this question?")){
+				clickFun(p);
+			}
+			return false;
+		}
+		function clickFun(p){
+			$.get($(p).attr('href'),function(data,status){
+				if (data == '1'){
+			    	alert("Success");
+			    	location.reload()
+			    }else
+			    	alert("Fail");
+			 });
+			return false;
+		}
+	</script>
+{%endblock%}

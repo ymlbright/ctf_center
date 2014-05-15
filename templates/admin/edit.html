@@ -1,0 +1,80 @@
+{%extends "admin/base.html"%}
+{%block title%}CTF Center - scoreboard{% endblock %}
+{%block content%}
+	<input type="text" class="hide" id="type" value="{{q.q.tag}}">
+    <form class="form-horizontal" role="form" id="questionForm" onsubmit="return submitFun();">
+      {% csrf_token %}
+      <input type="text" class="hide" name="qid" value="{{q.q.qid}}">
+	  <div class="form-group">
+	    <label for="name" class="col-sm-2 control-label">Name</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="name" name="name" placeholder="Question name" value="{{q.q.name}}">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="source" class="col-sm-2 control-label">Source</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="source" name="source" placeholder="Question source" value="{{q.q.source}}">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="source" class="col-sm-2 control-label">Tag</label>
+	    <div class="col-sm-10">
+	      <select class="form-control" id="tag" name="tag">
+			<option value="M">Misc</option>
+			<option value="C" >Crypto</option>
+			<option value="F">Forensics</option>
+			<option value="P">Pwnables</option>
+			<option value="R">Reverse</option>
+			<option value="W">Web</option>
+		  </select>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="point" class="col-sm-2 control-label">Point</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="point" name="point" placeholder="Question point" value="{{q.q.point}}">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="flag" class="col-sm-2 control-label">Flag</label>
+	    <div class="col-sm-10">
+	      <input type="text" class="form-control" id="flag" name="flag" placeholder="Question flag" value="{{q.q.flag}}">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="discribe" class="col-sm-2 control-label">Discribe</label>
+	    <div class="col-sm-10">
+	      <textarea class="form-control" id="discribe" name="discribe" placeholder="Question discribe" rows="3">{{q.q.discribe}}</textarea>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-default">Submit</button>
+	    </div>
+	  </div>
+	</form>
+
+	<script>
+		$(document).ready(function(){
+			$("option").each(function(a,b){
+		        if( $(b).attr("value") == $('#type').val()){
+		            $(b).attr("selected","selected");
+		        }
+		    });
+		});
+		function submitFun(){
+        	if (confirm("Are you sure to submit?")){
+	          $.post("{% url admin.views.editq %}", $("#questionForm").serialize(),function (data){
+	              if (data.status!=1){
+	                alert("Submit fail."+data.msg)
+	              } else{
+	              	alert("Submit success.")
+	                document.location = data.jump;
+	              }
+	            },'json');
+	        }
+	        return false;
+		}
+	</script>
+{%endblock%}

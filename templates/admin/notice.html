@@ -1,0 +1,44 @@
+{%extends "admin/base.html"%}
+{%block title%}CTF Center - scoreboard{% endblock %}
+{%block content%}
+	<div class="pull-right"><a class="btn btn-default" href="{% url admin.views.notice_add %}">Add</a></div>
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Nid</th>
+				<th>Date</th>
+				<th>Notice</th>
+				<th>Action</th>
+			</tr>
+		<tbody>
+			{% for n in q.n %}
+				<tr>
+					<th>{{ n.nid }}</th>
+					<th>{{ n.get_date }}</th>
+					<th>{{ n.content }}</th>
+					<th>
+						<a href="{% url admin.views.notice_del id=n.nid %}" onclick="return makesure(this);">Delete</a>
+					</th>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<script>
+		function makesure(p){
+			if (confirm("Are you sure to delete this notice?")){
+				clickFun(p);
+			}
+			return false;
+		}
+		function clickFun(p){
+			$.get($(p).attr('href'),function(data,status){
+				if (data == '1'){
+			    	alert("Success");
+			    	location.reload()
+			    }else
+			    	alert("Fail");
+			 });
+			return false;
+		}
+	</script>
+{%endblock%}
