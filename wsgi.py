@@ -3,7 +3,7 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 #father dir
-sys.path.append('/var/www/django')
+sys.path.append('/django')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'ctfsystem.settings'
 
 import django.core.handlers.wsgi
