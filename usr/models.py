@@ -34,7 +34,12 @@ class Question(models.Model):
 	def get_date(self):
 		x = localtime(self.date)
 		return strftime('%Y-%m-%d %H:%M:%S',x)
+	def get_attach(self):
+		if True:
+			fileinfo = FileInfo.objects.get(questionId=self)
+			return fileinfo.filename
 
+		
 	def resolve(self,uid,flag):
 		if flag==self.flag:
 			try:
@@ -122,6 +127,16 @@ class Notice(models.Model):
 		x = localtime(self.date)
 		return strftime('%Y-%m-%d %H:%M:%S',x)
 
+
+class FileInfo(models.Model):
+	filename = models.CharField(max_length=200)
+	filesize = models.IntegerField(default=0)
+	filepath = models.CharField(max_length=200)
+	questionId = models.ForeignKey(Question)
+	def __unicode__(self):
+		return self.filename.join(qid)
+
+	
 ''''
 class Writeup(models.Model):
 	qid = models.ForeignKey(Question,primary_key=True,db_index=True)

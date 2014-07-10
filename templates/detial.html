@@ -6,7 +6,7 @@
 			<h3 class="panel-title">{{q.q.name}}</h3>
 		</div>
 		<div class="panel-body">
-			<p>Type:{{q.q.get_tag_display}} Score:{{q.q.point}} Createtime:{{q.q.get_date}} From:{{q.q.source}}</p>
+			<p>Type:{{q.q.get_tag_display}} Score:{{q.q.point}} Createtime:{{q.q.get_date}} From:{{q.q.source}} Attach:<a href="fileUpload/{{q.q.get_attach}}">{{q.q.get_attach}}</a></p>
 			<p>{{q.q.discribe|safe}}</p>
 			{% if q.pass %}
 				<div class="alert alert-success">

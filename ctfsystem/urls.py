@@ -25,7 +25,6 @@ urlpatterns = patterns('',
 	url(url_prefix+r'question/(?P<id>[0-9]{1,})$','usr.views.detial'),
 
 	url(url_prefix+r'(?P<type>[a-z]{1,10})$','usr.views.question'),
-
 	url(admin_perfix+r'$','admin.views.signin'),
 	url(admin_perfix+r'login$','admin.views.login'),
 	url(admin_perfix+r'user$','admin.views.user'),
@@ -40,6 +39,7 @@ urlpatterns = patterns('',
 	url(admin_perfix+r'lock/(?P<id>[0-9]{1,})$','admin.views.lock'),
 	url(admin_perfix+r'unlock/(?P<id>[0-9]{1,})$','admin.views.unlock'),
 	url(admin_perfix+r'logout$','admin.views.logout'),
+	url(admin_perfix+r'delf/(?P<name>\d+.\w+)$','admin.views.delf'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -5,9 +5,13 @@ from django.shortcuts import render_to_response,RequestContext
 from django.utils import simplejson
 from django.core.urlresolvers import reverse  
 from django.core.paginator import Paginator
+from admin.functions import checkAllow,writefile
 # Create your views here.
-from usr.models import User,Question,Notice
+from usr.models import User,Question,Notice,FileInfo
 from time import time
+from time import strftime
+from time import localtime
+import os
 
 def signin(request):
 	if request.session.get('auth'):
@@ -62,7 +66,7 @@ def question(request):
 		q['pageall'] = paginator.num_pages
 		q['pagepre'] = int(page) - 1
 		q['pagenex'] = int(page) + 1
-		return render_to_response('admin/question.html',locals())
+		return render_to_response('admin/question.html',locals(),context_instance=RequestContext(request))
 	else:
 		return render_to_response('admin/signin.html',locals(),context_instance=RequestContext(request))
 
@@ -80,9 +84,9 @@ def notice_add(request):
 		if 'notice' in request.POST:
 			try:
 				Notice.objects.create(date=time(),content=request.POST['notice'])
-				return HttpResponse(simplejson.dumps({'status':1,'jump':reverse('admin.views.notice')}, ensure_ascii=False))
+				return HttpResponse(simplejson.dumps({'status':'1','jump':reverse('admin.views.notice')}, ensure_ascii=False))
 			except:
-				return HttpResponse(simplejson.dumps({'status':0}, ensure_ascii=False))
+				return HttpResponse(simplejson.dumps({'status':'0'}, ensure_ascii=False))
 		else:
 			return render_to_response('admin/notice_add.html',locals(),context_instance=RequestContext(request))
 	else:
@@ -109,7 +113,7 @@ def edit(request,id):
 		return render_to_response('admin/edit.html',locals(),context_instance=RequestContext(request))
 	else:
 		return render_to_response('admin/signin.html',locals(),context_instance=RequestContext(request))
-
+   
 def editq(request):
 	if request.session.get('auth'):
 		data = {'status':'0'}
@@ -127,24 +131,70 @@ def editq(request):
 					q.save()
 					data['status'] = 1
 					data['jump'] = reverse('admin.views.question')
-				except:
-					data['msg'] = "Wrong ID."
+					if 'file' in request.FILES:
+						f = request.FILES['file']
+						handleUpFile(f,q,data)
+
+				except Exception,e:
+						
+						data['msg'] = "Wrong ID."
+
 			else:
 				try:
-					Question.objects.create(name=request.POST['name'],
-						source=request.POST['source'],
-						discribe=request.POST['discribe'],
-						date=time(),
-						point=request.POST['point'],
-						flag=request.POST['flag'],
-						tag=request.POST['tag'])
+					q=  Question.objects.create(name=request.POST['name'],
+								source=request.POST['source'],
+								discribe=request.POST['discribe'],
+								date=time(),
+								point=request.POST['point'],
+								flag=request.POST['flag'],
+								tag=request.POST['tag'])
 					data['status'] = 1
 					data['jump'] = reverse('admin.views.question')
-				except:
-					data['msg'] = "Post error."
-		return HttpResponse(simplejson.dumps(data, ensure_ascii=False))
+					if 'file' in request.FILES:						
+						f = request.FILES['file']
+						handleUpFile(f,q,data)
+					else:
+						q.delete()
+						data['status'] = 0
+				except Exception,e:					
+				    data['msg'] = "Post error."
+			return HttpResponse(simplejson.dumps(data, ensure_ascii=False))
+
+		else:
+			return render_to_response('admin/signin.html',locals(),context_instance=RequestContext(request))
+
+def handleUpFile(upfile,question,data):
+	path = 'fileUpload/'
+	ext = checkAllow(upfile.name)
+	if ext!=None:
+		if True:
+			time_format = r"%Y%m%d%H%M%S"	
+			nowtime = strftime(time_format,localtime(time()))
+			upfilename = nowtime + ext			
+			try:
+				oldFileInfo = FileInfo.objects.get(questionId=question)
+				oldFileInfo.filename = upfilename
+				oldFileInfo.size = upfile.size
+				oldFileInfo.save()
+				data['file'] = oldFileInfo.filename + oldFileInfo.size 
+			except:
+				FileInfo.objects.create(filename=upfilename,filesize=upfile.size,filepath=path,questionId=question)			
+			writefile(path+upfilename,upfile)
+
+def delf(request,name):
+	if request.session.get('auth'):
+		try:
+			FileInfo.objects.get(filename=name)
+			os.remove("fileUpload/"+name)
+			return HttpResponse('1')
+		except:
+			return HttpResponse('0')
+
 	else:
 		return render_to_response('admin/signin.html',locals(),context_instance=RequestContext(request))
+
+
+
 
 def delq(request,id):
 	if request.session.get('auth'):

@@ -10,7 +10,9 @@
 				<th>Name</th>
 				<th>Score</th>
 				<th>Date</th>
+				<th>Attach</th>
 				<th>Action</th>
+				
 			</tr>
 		<tbody>
 			{% for u in q.q %}
@@ -20,6 +22,7 @@
 					<th>{{ u.name }}</th>
 					<th>{{ u.point }}</th>
 					<th>{{ u.get_date }}</th>
+					<th><a href="../fileUpload/{{u.get_attach}}" id={{u.qid}}>{{ u.get_attach }}</th>
 					<th>
 						<a href="{% url 'admin.views.edit' id=u.qid %}">Edit</a> |
 						<a href="{% url 'admin.views.delq' id=u.qid %}" onclick="return makesure(this);">Delete</a>
@@ -42,7 +45,22 @@
 	<script>
 		function makesure(p){
 			if (confirm("Are you sure to delete this question?")){
-				clickFun(p);
+				var fileurl = $(p).attr('href');
+				while(fileurl.indexOf("/")!=-1){
+					fileurl = fileurl.slice(fileurl.indexOf("/")+1);
+				}
+				var attachId = "#" + fileurl
+				fileurl = $(attachId).html()
+				fileurl = "delf/"+fileurl;
+				$.get(
+					fileurl,
+					function(data,status){
+						if(data == '1'){
+							clickFun(p);
+						}
+					}
+				);
+				
 			}
 			return false;
 		}
